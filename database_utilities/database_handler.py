@@ -78,3 +78,4 @@ for row in range(10000):
         insert_row_banks(bank_id, bank_name)
     if check_2 == False:
         insert_row_branches(ifsc, bank_id, branch, address, city, district, state)
+        
