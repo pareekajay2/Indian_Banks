@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from database_utilities.utils import get_data_banks, get_branch_details
 from resources import create_access_token
 import jwt
-import json
+import pandas as pd
 from functools import wraps
 
 app = Flask(__name__)
@@ -22,8 +22,8 @@ def token_required(f):
 
         try:
             data = jwt.decode(token, 'secret', algorithms=['HS256'])
-            with open('tokens.json', 'r') as infile:
-                file = json.load(infile)
+            csv_data = pd.read_csv("tokens.csv")
+            file = {str(csv_data['primary'].iloc[0]): int(csv_data['value'].iloc[0])}
             if data['exp'] == file['exp']:
                 pass
             else:
