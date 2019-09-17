@@ -59,3 +59,22 @@ def is_ifsc_exists(ifsc):
         return True
     else:
         return False
+
+
+csv_data = pd.read_csv("bank_branches.csv")
+
+for row in range(10000):
+    bank_id = int(csv_data['bank_id'].iloc[row])
+    bank_name = str(csv_data['bank_name'].iloc[row]).replace("'", "''")
+    ifsc = csv_data['ifsc'].iloc[row]
+    branch = str(csv_data['branch'].iloc[row]).replace("'", "''")
+    address = csv_data['address'].iloc[row].replace("'", "''")
+    city = csv_data['city'].iloc[row]
+    district = csv_data['district'].iloc[row]
+    state = csv_data['state'].iloc[row]
+    check = is_bank_exists(bank_id)
+    check_2 = is_ifsc_exists(ifsc)
+    if check == False:
+        insert_row_banks(bank_id, bank_name)
+    if check_2 == False:
+        insert_row_branches(ifsc, bank_id, branch, address, city, district, state)
